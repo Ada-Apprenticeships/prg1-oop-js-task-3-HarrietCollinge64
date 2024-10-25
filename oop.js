@@ -63,32 +63,26 @@ class ToDo {
       return(this.tasksList.length)
     }
     remove(title){
-      let removed = false
-      for (let i = 0; i < this.tasksList.length; i++) {
-        if (this.tasksList[i].title === title) {
-          this.tasksList.splice(i,1)
-          removed = true
-        }
-        
-      }
-      return removed
+      // creates a new array with all tasks except <title>
+      const initialLength = this.tasksList.length;
+      this.tasksList = this.tasksList.filter(task => task.title !== title);
+      // if new array is shorter than initial array then a task has been removed 
+      return this.tasksList.length < initialLength
     }
     list(priority = 0){
-      let priorityList = []
-      for (let i = 0; i < this.tasksList.length; i++) {
-        if (this.tasksList[i].priority === priority || priority === 0) {
-          priorityList.push([this.tasksList[i].added, this.tasksList[i].title, this.tasksList[i].priority])
-        }
-      }
-      return priorityList
+      // filters task based on priority condition then transforms the filtered tasks into a new array
+      const priorityList = this.tasksList
+      .filter(task => task.priority === priority || priority === 0)
+      .map(task => [task.added, task.title, task.priority]);
+
+      return priorityList;
     }
     task(title) {
-      for (let i = 0; i < this.tasksList.length; i++) {
-        if (this.tasksList[i].title === title) {
-          return this.tasksList[i]
-        }
-      }
-      throw new Error(`Task '${title}' Not Found`)
+      // returns the task that matches the title  
+      if (this.tasksList.find(task => task.title === title)) {
+        return task
+      } 
+     throw new Error(`Task '${title}' Not Found`)
     }
   }
 
