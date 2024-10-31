@@ -1,13 +1,12 @@
 PRIORITY = { "LOW": 1, "MEDIUM": 3, "HIGH": 5, "URGENT": 7 };
 
 
-function validInteger (value) { // value can be a string or a number (integer)
-  const regex =  /^[0-9]\d*$/
-  return regex.test(value.toString());
+function validInteger (value) { 
+  return /^[0-9]\d*$/.test(value.toString())
 }  
 
 
-function validatePriority(priority) { // value can be a string or a number (integer)
+function validatePriority(priority) { 
   return priority == "LOW" || priority == 1 ? 1
   : priority == "MEDIUM" || priority == 3 ? 3
   : priority == "HIGH" || priority == 5 ? 5
@@ -25,37 +24,35 @@ function todaysDate () {
 
 
 class Task {
-
-  //(title, priority)
-  _added;
-  _title;
-  _priority;
+  #added;
+  #title;
+  #priority;
 
   constructor(title, priority){
-    this._title = title
-    this._priority = priority
-    this._added = todaysDate()
+    this.#title = title
+    this.#priority = priority
+    this.#added = todaysDate()
   }
   get title() {
-    return this._title
+    return this.#title
   }
   get priority() {
-    return this._priority
+    return this.#priority
   }
   set priority(newPriority) {
-    this._priority = validatePriority(newPriority)
+    this.#priority = validatePriority(newPriority)
   }
   get added() {
-    return this._added
+    return this.#added
   }
  
 }
 
 
 class ToDo {
-    _tasks
+    #tasks;
     constructor(tasks){
-      this._tasks = tasks
+      this.#tasks = tasks
       this.tasksList = []
     }
     add(Task){
@@ -85,13 +82,6 @@ class ToDo {
      throw new Error(`Task '${title}' Not Found`)
     }
   }
-
-
-
-
-
-
-
 
 // Leave this code here for the automated tests
 module.exports = {
